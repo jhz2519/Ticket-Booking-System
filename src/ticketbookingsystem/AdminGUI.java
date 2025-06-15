@@ -21,6 +21,7 @@ public class AdminGUI extends JFrame {
     private JList<String> eventList;
 
     public AdminGUI(admin adminUser) {
+        
         this.Admin = adminUser;
         setTitle("Admin Page :)");
 
@@ -45,20 +46,20 @@ public class AdminGUI extends JFrame {
         JButton createEvent = new JButton("Create Event");
         JButton deleteEvent = new JButton("Delete Event");
         JButton editEvent = new JButton("Edit Event");
-        JButton refreshEvents = new JButton("Refresh Events");
+        JButton refreshPage = new JButton("Refresh Page");
         JButton logout = new JButton("Logout");
 
         createEvent.addActionListener(new CreateEventListener());
         deleteEvent.addActionListener(new DeleteEventListener());
         editEvent.addActionListener(new EditEventListener());
-        refreshEvents.addActionListener(new RefreshEventListener());
+        refreshPage.addActionListener(new RefreshPageListener());
         logout.addActionListener(new LogoutListener());
 
-        JPanel buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 5, 10, 10));
         buttonPanel.add(createEvent);
         buttonPanel.add(editEvent);
         buttonPanel.add(deleteEvent);
-        buttonPanel.add(refreshEvents);
+        buttonPanel.add(refreshPage);
         buttonPanel.add(logout);
 
         add(new JScrollPane(eventList), BorderLayout.CENTER);
@@ -87,7 +88,7 @@ public class AdminGUI extends JFrame {
         }
     }
 
-    private class RefreshEventListener implements ActionListener {
+    private class RefreshPageListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             showEvents();
         }

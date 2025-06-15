@@ -33,14 +33,14 @@ public class UserGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel(new BorderLayout());
-        JPanel buttonsPanel = new JPanel(new GridLayout(1, 7, 5, 5));
+        JPanel buttonsPanel = new JPanel(new GridLayout(2, 5, 10, 10));
         
         JButton viewEvents = new JButton("View Events");
         JButton bookTicket = new JButton("Book Ticket");
-        JButton viewBookings = new JButton("View My BookingS");
+        JButton viewBookings = new JButton("View My Booking(s)");
         JButton updateBooking = new JButton("Update My Booking");
         JButton cancelBooking = new JButton("Cancel My Booking");
-        JButton refreshEvents = new JButton("Refresh Events");
+        JButton refreshPage = new JButton("Refresh Page");
         JButton logout = new JButton("Logout");
 
         buttonsPanel.add(viewEvents);
@@ -48,7 +48,7 @@ public class UserGUI extends JFrame {
         buttonsPanel.add(viewBookings);
         buttonsPanel.add(updateBooking);
         buttonsPanel.add(cancelBooking);
-        buttonsPanel.add(refreshEvents);
+        buttonsPanel.add(refreshPage);
         buttonsPanel.add(logout);
 
         panel.add(buttonsPanel, BorderLayout.NORTH);
@@ -64,7 +64,7 @@ public class UserGUI extends JFrame {
         viewBookings.addActionListener(e -> viewMyBookings());
         updateBooking.addActionListener(e -> updateBooking());
         cancelBooking.addActionListener(e -> cancelBooking());
-        refreshEvents.addActionListener(e -> showEvents());
+        refreshPage.addActionListener(e -> showEvents());
         logout.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Logging out... Bye!");
             System.exit(0);
@@ -286,8 +286,8 @@ public class UserGUI extends JFrame {
                 allLines.add(line);
                 String[] parts = line.split(",");
                 if (parts.length >= 5 && parts[4].equalsIgnoreCase(user.email)) {
-                    bookingList.addElement(String.format("%s in %s on %s (%s tickets)",
-                            parts[0], parts[1], parts[2], parts[3]));
+                    bookingList.addElement(String.format("%s on %s (%s tickets)",
+                            parts[1], parts[2], parts[3]));
                 }
             }
 

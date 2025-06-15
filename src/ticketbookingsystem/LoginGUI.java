@@ -6,13 +6,14 @@ package ticketbookingsystem;
 
 /**
  *
- * @author kylagallegos
+ * @author kylagallegos + love
  */
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
+import java.sql.SQLException;
+import ticketbookingsystem.UserDAO;
 
 //Contains Main Method - run this class
 
@@ -40,8 +41,17 @@ public class LoginGUI extends JFrame {
                 
             }
 
-            //checks if email and login matches a user from users.txt
-            Object loggedInUser = getUserFromLogin(email, password);
+            // validate credentials against the database
+            Object loggedInUser;
+            try {
+                loggedInUser = new UserDAO().getUser(email, password);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(LoginGUI.this,
+                        "Database error. See console.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             if (loggedInUser instanceof admin) {
                 
@@ -81,7 +91,7 @@ public class LoginGUI extends JFrame {
         setLocation(x, y);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(5, 1, 5, 5));
+        setLayout(new GridLayout(6, 1, 5, 5)); // adjusted rows to add Register button
 
         add(new JLabel("Please enter your email:"));
         emailField = new JTextField();
@@ -95,40 +105,45 @@ public class LoginGUI extends JFrame {
         loginButton.addActionListener(new LoginButtonListener()); 
         add(loginButton);
 
+        // *Love added ++ register button for creating an accountfor new users
+        JButton registerButton = new JButton("Register");
+        
+        registerButton.addActionListener(e -> 
+        {
+            String emailReg = JOptionPane.showInputDialog(LoginGUI.this,
+                "Enter new email:");
+            if (emailReg == null || emailReg.isBlank()) return;
+
+            String passwordReg = JOptionPane.showInputDialog(LoginGUI.this,
+                "Enter new password:");
+            if (passwordReg == null || passwordReg.isBlank()) return;
+
+            try 
+            {
+                new UserDAO().createUser(emailReg, passwordReg);
+                JOptionPane.showMessageDialog(LoginGUI.this,
+                    "User account is registerd! :)  You can now log in.",
+                    "Success!!", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException ex) 
+            {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(LoginGUI.this,
+                    "There was an error registering user account :(: " + ex.getMessage(),
+                    "Error...", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        add(registerButton);
+
         setVisible(true);
         
     }
 
-   
-    private Object getUserFromLogin(String email, String password) {
-        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 3) {
-                    String fileEmail = parts[0];
-                    String filePassword = parts[1];
-                    String nameOrRole = parts[2];
-
-                    if (fileEmail.equalsIgnoreCase(email) && filePassword.equals(password)) {
-                        if (nameOrRole.equalsIgnoreCase("admin")) {
-                            return new admin("Admin", fileEmail);
-                        } else {
-                            return new user(nameOrRole, fileEmail);
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this,
-                    "There was an error when reading the users file.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            
-        }
-        return null;
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
+    
+    //initialise and autocreate db tables before gui 
+    DBInit.init();
+    
     SwingUtilities.invokeLater(() -> new LoginGUI());
     }
 
