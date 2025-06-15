@@ -1,0 +1,8 @@
+Sarah's 21st Birthday,Titirangi,2026-01-01,100
+Sam's Baby Shower,Taupo,2025-08-08,49
+Mark's Wedding,Otara,2025-09-09,99
+Jim's baby shower,Auckland,2025-01-13,50
+Pokemon Go Tournament OCE,AUT,2026-06-16,15
+Meowfest,MeowLand,2025-02-02,9
+Kate's 50th Birthday,Wellington,2025-07-07,99
+Coco's 1st Birthday,Wellington,2025-10-10,10

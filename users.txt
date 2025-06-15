@@ -1,0 +1,7 @@
+admin@example.com,admin123,admin
+sam@example.com,sam123,admin
+sarah@example.com,sarah123,admin
+
+love@example.com,love123,user
+test@example.com,test123,user
+kyla@example.com,kyla123,user

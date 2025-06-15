@@ -1,0 +1,6 @@
+Sarah's 21st Birthday,Titirangi,01-01-2026,97,love@example.com
+Pokemon Go Tournament OCE,AUT,2026-06-16,12,love@example.com
+
+user,Kate's 50th Birthday,2025-07-07,1,kyla@example.com
+user,Sam's Baby Shower,2025-08-08,1,kyla@example.com
+user,Mark's Wedding,2025-09-09,2,kyla@example.com
